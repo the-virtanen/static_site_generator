@@ -1,8 +1,8 @@
 from textnode import *
 
-t1 = TextNode("hello", "text")
-t2 = TextNode("fuck","link","www.derp.com")
+def main():
+    t1 = TextNode("hello", "link", "https://www.boot.dev")
 
-print(repr(t1))
-print(repr(t2))
-print(t1 = t2)
+    print(t1)
+
+main()

@@ -25,6 +25,9 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
 
     for node in old_nodes:
+        if node.text_type != TextType.TEXT:
+            new_nodes.append(node)
+            continue
         text = node.text
         blocks = text.split(delimiter)
         if len(blocks) % 2 == 0:

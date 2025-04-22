@@ -1,5 +1,5 @@
 import unittest
-from main import text_node_to_html_node
+from text_function import text_node_to_html_node
 from textnode import *
 
 class TestFuncsNode(unittest.TestCase):

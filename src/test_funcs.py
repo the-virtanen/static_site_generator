@@ -1,5 +1,5 @@
 import unittest
-from text_function import text_node_to_html_node
+from text_function import *
 from textnode import *
 
 class TestFuncsNode(unittest.TestCase):
@@ -16,6 +16,16 @@ class TestFuncsNode(unittest.TestCase):
         self.assertEqual(html_node.tag, "a")
         self.assertEqual(html_node.props, {'href': 'https://www.boot.dev'})
 
+    def test_split(self):
+        node = TextNode("This is text with a `code block` word", TextType.TEXT)
+        new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
+        self.assertListEqual(new_nodes, [TextNode("This is text with a ", TextType.TEXT, None), TextNode("code block", TextType.CODE, None), TextNode(" word", TextType.TEXT, None)])
+    
+    #how do i test return error
+    def test_split_two_bold(self):
+        node = TextNode("This is **bold text** with a **super bold** word", TextType.TEXT)
+        new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
+        self.assertListEqual(new_nodes, [TextNode("This is ", TextType.TEXT, None), TextNode("bold text", TextType.BOLD, None), TextNode(" with a ", TextType.TEXT, None), TextNode("super bold", TextType.BOLD, None), TextNode(" word", TextType.TEXT, None)])
 
 if __name__ == "__main__":
     unittest.main()

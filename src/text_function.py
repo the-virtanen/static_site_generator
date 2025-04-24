@@ -1,6 +1,7 @@
 from textnode import *
 from htmlnode import *
 from extracts import *
+import re
 
 def text_node_to_html_node(text_node):
     text = text_node.text
@@ -57,26 +58,28 @@ def split_nodes_image(old_nodes):
 
         replaced_text = text
         for imgage_alt, image_url in images:
-            image_node = TextNode(imgage_alt, TextType.IMAGE, image_url)
-            replaced_text = text.replace(f"![{imgage_alt}]({image_url})", f"||{image_node}||") ## returns sting need to fix
-            sections = replaced_text.split("||")
-            new_nodes.extend( sections )            
-            
-
-        """
-        if len(blocks) % 2 == 0:
-            raise Exception("invalid markdown syntax")
+            #image_node = TextNode(imgage_alt, TextType.IMAGE, image_url)
+            replaced_text = replaced_text.replace(f"![{imgage_alt}]({image_url})", f"||({imgage_alt}),({image_url})||") ## returns sting need to fix
         
-        for i in range(len(blocks)):
-            if i % 2 == 0:
-                if blocks[i] == "":
-                    continue
-                new_nodes.append(TextNode(blocks[i], TextType.TEXT))
+        sections = replaced_text.split("||")
+
+        for section in sections:
+            if section == "":
+                continue
+            if section[0] == "(" and section[-1] == ")":
+                
+                img = re.findall(r"\((.*?)\)", section)
+                print(img)
+                new_nodes.append(TextNode(img[0],TextType.IMAGE, img[1]))
             else:
-                new_nodes.append(TextNode(blocks[i], text_type))
-        """
+                new_nodes.append(TextNode(section, TextType.TEXT,))
+
     return new_nodes
     #return new_nodes
+
+
+def node_splitter_imgage_link(text, split_text_type):
+    pass
 
 if __name__ == "__main__":
     node = TextNode(

@@ -57,6 +57,7 @@ def split_nodes_image(old_nodes):
             continue
 
         replaced_text = text
+        
         for imgage_alt, image_url in images:
             #image_node = TextNode(imgage_alt, TextType.IMAGE, image_url)
             replaced_text = replaced_text.replace(f"![{imgage_alt}]({image_url})", f"||({imgage_alt}),({image_url})||") ## returns sting need to fix
@@ -69,24 +70,51 @@ def split_nodes_image(old_nodes):
             if section[0] == "(" and section[-1] == ")":
                 
                 img = re.findall(r"\((.*?)\)", section)
-                print(img)
+                
                 new_nodes.append(TextNode(img[0],TextType.IMAGE, img[1]))
             else:
                 new_nodes.append(TextNode(section, TextType.TEXT,))
 
     return new_nodes
-    #return new_nodes
 
+def split_nodes_link(old_nodes):
+    new_nodes = []
 
-def node_splitter_imgage_link(text, split_text_type):
-    pass
+    for node in old_nodes:
+        text = node.text
+        links = extract_markdown_links(text)
+
+        if links == None:
+            new_nodes.append(node)
+            continue
+
+        replaced_text = text
+        
+        for link_alt, link_url in links:
+            #link_node = TextNode(link_alt, TextType.link, link_url)
+            replaced_text = replaced_text.replace(f"[{link_alt}]({link_url})", f"||({link_alt}),({link_url})||") ## returns sting need to fix
+        
+        sections = replaced_text.split("||")
+
+        for section in sections:
+            if section == "":
+                continue
+            if section[0] == "(" and section[-1] == ")":
+                
+                link = re.findall(r"\((.*?)\)", section)
+                
+                new_nodes.append(TextNode(link[0],TextType.LINK, link[1]))
+            else:
+                new_nodes.append(TextNode(section, TextType.TEXT,))
+
+    return new_nodes
 
 if __name__ == "__main__":
     node = TextNode(
-            "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
+            "This is text with an [link](https://i.imgur.com/zjjcJKZ.png) and another [second link](https://i.imgur.com/3elNhQu.png)",
             TextType.TEXT,
         )
-    new_nodes = split_nodes_image([node])
+    new_nodes = split_nodes_link([node])
     print(new_nodes)
 
           

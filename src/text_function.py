@@ -44,12 +44,16 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
                 new_nodes.append(TextNode(blocks[i], text_type))
 
     return new_nodes
-
+#tässä jossain on ongelma, jos on monta nodea esim bold skippaa.
 def split_nodes_image(old_nodes):
     new_nodes = []
 
     for node in old_nodes:
         text = node.text
+        if node.text_type != TextType.TEXT:
+            new_nodes.append(node)
+            continue
+
         images = extract_markdown_images(text)
 
         if images == None:
@@ -82,6 +86,11 @@ def split_nodes_link(old_nodes):
 
     for node in old_nodes:
         text = node.text
+
+        if node.text_type != TextType.TEXT:
+            new_nodes.append(node)
+            continue
+        
         links = extract_markdown_links(text)
 
         if links == None:

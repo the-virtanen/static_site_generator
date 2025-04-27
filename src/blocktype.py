@@ -10,7 +10,7 @@ class BlockType(Enum):
     ORDERED_LIST = "ordered_list"
 
 def block_to_block_type(block):
-    if block[0] == "#":
+    if block.startswith(("# ", "## ", "### ", "#### ", "##### ", "###### ")):
         return BlockType.HEADING
     
     if block[0:3] == "```" and block[-3:] == "```":

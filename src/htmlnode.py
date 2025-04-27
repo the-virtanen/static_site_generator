@@ -20,7 +20,7 @@ class HTMLNode:
     
     def __repr__(self):
         return (
-            f"tag: {self.tag}\nvalue: {self.value}\nchildren: {self.children}\nprops: {self.props}"
+            f"tag: {self.tag} value: {self.value} children: {self.children} props: {self.props}"
         )
     
 class LeafNode(HTMLNode):
@@ -41,7 +41,7 @@ class LeafNode(HTMLNode):
     
     def __repr__(self):
         return (
-            f"tag: {self.tag}\nvalue: {self.value}\nprops: {self.props}"
+            f"tag: {self.tag} value: {self.value} props: {self.props}"
         )
 
 class ParentNode(HTMLNode):
@@ -61,7 +61,7 @@ class ParentNode(HTMLNode):
   
     def __repr__(self):
         return (
-            f"tag: {self.tag}\nchildren: {self.children}\nprops: {self.props}"
+            f"tag: {self.tag} children: {self.children} props: {self.props}"
         )
 
 

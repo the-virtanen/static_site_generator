@@ -11,15 +11,16 @@ def markdown_to_blocks(markdown):
     
     return clean_blocks
 
-md = """
+if __name__ == "__main__":
+    md = """
 
-This is **bolded** paragraph
+    This is **bolded** paragraph
 
-This is another paragraph with _italic_ text and `code` here
-This is the same paragraph on a new line
+    This is another paragraph with _italic_ text and `code` here
+    This is the same paragraph on a new line
 
-- This is a list
-- with items
-"""
-blocks = markdown_to_blocks(md)
-print(blocks)
+    - This is a list
+    - with items
+    """
+    blocks = markdown_to_blocks(md)
+    print(blocks)

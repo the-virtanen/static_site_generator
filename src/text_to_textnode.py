@@ -6,7 +6,7 @@ def text_to_textnodes(text):
 
     text_list = split_nodes_delimiter(text_list, "**", TextType.BOLD)
     text_list = split_nodes_delimiter(text_list, "_", TextType.ITALIC)
-    text_list = split_nodes_delimiter(text_list, "`", TextType.CODE)
+    text_list = split_nodes_delimiter(text_list, "`", TextType.CODE) ##siirrä tää jos tulee bugi koodinoden sisällä
 
     text_list = split_nodes_image(text_list)
     

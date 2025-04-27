@@ -49,11 +49,26 @@ def block_to_block_type(block):
         if is_unordered_list:
             return BlockType.UNORDERED_LIST
     
-    #is_ordered_list == True
-    for row in rows:
-        check_row = row.split(". ", 1)
-        print(check_row)
-        #rows_start_with_number = re.findall(r"\b(\d+)\. ", row)
+    if rows[0][0:3] == "1. ":
+        expected_number = 1
+        is_ordered_list = True
+
+        for row in rows:
+            check_row = row.split(". ", 1)[0]
+            
+            if not check_row.isnumeric():
+                is_ordered_list = False
+                break
+            if expected_number != int(check_row):
+                
+                is_ordered_list = False
+                break
+            
+            expected_number += 1
+
+        if is_ordered_list:
+            return BlockType.ORDERED_LIST
+    #rows_start_with_number = re.findall(r"\b(\d+)\. ", row)
 
 
     return BlockType.PARAGRAPH
@@ -70,12 +85,6 @@ if __name__ == "__main__":
     text = """1. sdf
 2. 21345
 3. ölkjasdf
-4. alöksj
-5. b
-6. l
-7. asd
-8. as
-9. asdf
-10. hello"""
+4. alöksj"""
 
     print(block_to_block_type(text))
